@@ -6,11 +6,11 @@ const app = express();
 
 app.use(cors());
 
-app.get('/api/things', async(req, res, next)=> {
+app.get('/api/pets', async(req, res, next)=> {
   try {
     const SQL = `
       SELECT *
-      FROM things
+      FROM pets
     `;
     const response = await client.query(SQL);
     res.send(response.rows);
@@ -24,16 +24,16 @@ const setup = async()=> {
   await client.connect();
   console.log('connected to the database');
   const SQL = `
-    DROP TABLE IF EXISTS things;
-    CREATE TABLE things(
+    DROP TABLE IF EXISTS pets;
+    CREATE TABLE pets(
       id SERIAL PRIMARY KEY,
       name VARCHAR(100),
       is_favorite BOOLEAN
     );
-    INSERT INTO things (name) VALUES ('foo');
-    INSERT INTO things (name) VALUES ('bar');
-    INSERT INTO things (name) VALUES ('bazz');
-    INSERT INTO things (name, is_favorite) VALUES ('quq', true);
+    INSERT INTO pets (name VARCHAR(20)) VALUES ('Charlie');
+    INSERT INTO pets (name VARCHAR(20)) VALUES ('Stinker');
+    INSERT INTO pets (name VARCHAR(20)) VALUES ('Soup');
+    INSERT INTO pets (name, is_favorite) VALUES ('Marly', true);
   `;
   await client.query(SQL);
   console.log('tables created and data seeded');
